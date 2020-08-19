@@ -46,7 +46,7 @@ with open(args.responses, newline='') as respfile:
                 print("Exiting.")
                 exit()
             scores[name] += points_answered
-            if a == questions[q]: scores[name] += points_right
+            if a not in questions[q]: scores[name] += points_right
 
 print(scores)
 
