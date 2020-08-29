@@ -63,7 +63,7 @@ with open(args.user, 'r') as f:
 print("Poll respondants not in database:")
 for person in scores:
     if scores[person]["User ID"] not in users:
-        print("\t%s\t%s"%(scores[person]["User ID"], scores[person]["User Name"]))
+        print("\t%s\t%s\t%s"%(scores[person]["User ID"], scores[person]["User Name"], scores[person]["Score"]))
 
 csv_columns = ["User Name", "User ID", "Score"]
 with open(args.output, 'w') as csvfile:
