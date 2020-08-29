@@ -17,6 +17,6 @@ You might sometimes have to add the right answer in manually if no one answered 
 
 Then when that file has been edited, you can run 
 
-```python zoom_polls/analyzeResults.py -r pollFile.csv -a answerFile.json -o outputFile.json -u usernames.txt```
+```python zoom_polls/analyzeResults.py -r pollFile.csv -a answerFile.json -o outputFile.csv -u usernames.txt```
 
 which will give you a CSV file with scores that can be imported to Canvas. The `usernames.txt` file is just a text file with the usernames for your students (taken from an exported Canvas gradebook). 
