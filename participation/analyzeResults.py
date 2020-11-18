@@ -48,6 +48,7 @@ with open(args.responses, newline='') as respfile:
             q = row[q_i]
             a = row[q_i+1]
             if q not in questions:
+                continue
                 print("You've done something wrong: this question isn't in your answers file.")
                 print(q)
                 print("Exiting.")

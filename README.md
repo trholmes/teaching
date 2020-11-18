@@ -3,7 +3,7 @@
 ## Working with Zoom polls
 
 Zoom polls can be made for each meeting, and the responses can be [exported](https://support.zoom.us/hc/en-us/articles/216378603) to a CSV.
-So far I haven't figured out how to import them from a CSV, and anyway making them in the GUI is kind of nice. I made scripts to take the 
+You can import the questions from a CSV as well, which I've found is easiest to do via the Canvas Zoom interface.  I made scripts to take the 
 responses and generate a template for the correct answers, then another script that scores participants based on responses.
 
 How to run:
