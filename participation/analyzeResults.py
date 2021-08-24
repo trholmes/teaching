@@ -34,7 +34,10 @@ with open(args.responses, newline='') as respfile:
     reader = csv.reader(respfile)
     for row in reader:
         if '#' in row[0]: continue
+        if row[0] in ['Report Generated:', 'Topic', 'Physics 221 Tuesday Class', 'Poll Details', '#']: continue
+        if 'Poll Report' in row[0]: continue
         entries = len(row)
+        #print(row)
         name = row[2].split("@")[0]
         if name not in scores:
             scores[name] = {
