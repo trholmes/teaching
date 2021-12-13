@@ -22,29 +22,14 @@ def getGrade(number):
             lb = b
     return lower_bounds[lb]
 
-# Metadata
-term_code = 202140
-crns = {
-        12: 41695,
-        13: 41696,
-        14: 41697,
-        15: 41698,
-        16: 47018,
-        17: 41699,
-        18: 41700,
-        19: 41701,
-        }
-
 # Find name of template
-template_name = glob.glob("221_Data/GradeEntry/*Template.xlsx")[0]
-print("Template:", template_name)
+template_names = glob.glob("221_Data/GradeEntry/*Template.xlsx")
 
 # Find file with all grades
 grades_name = glob.glob("221_Data/GradeEntry/*PHYS221.csv")[0]
 print("Full grade file:", grades_name)
 
-# Load both into dataframes
-df_template = pd.read_excel(template_name)
+# Load into dataframes
 df_grades = pd.read_csv(grades_name)
 df_grades.dropna(subset = ['Section'], inplace=True)
 
@@ -59,17 +44,24 @@ for s in sections:
 
     print("\tWorking on section:", s)
     section_no = int(s.split()[-1])
+    template_name = [name for name in template_names if "%03d_Template"%section_no in name][0]
+    df_template = pd.read_excel(template_name, dtype={'Student ID': str})
+
     section_grades = df_grades[df_grades.Section==s]
-    output_grades = df_template.copy()
-    output_grades.drop(output_grades.index, inplace=True)
-
-    i = 0
     for index,entry in section_grades.iterrows():
-        student_df = pd.DataFrame([[term_code, crns[section_no], entry["Student"], entry["ID"], "No", "No", "Physics", getGrade(float(entry["Final Score"])), '', '', '', '', "Cannot modify default date"]], columns = list(output_grades.columns), index = [i])
-        output_grades = output_grades.append(student_df)
-        i += 1
+        name = entry["Student"]
+        parsed_name = name.split(",")[1].strip()+" "+name.split(",")[0]
+        #print(parsed_name)
+        temp_index = df_template[df_template["Full Name"]==parsed_name].index.values
+        if len(temp_index)==0:
+            temp_index = df_template[df_template["Full Name"].str.endswith(name.split(",")[0].strip())].index.values
+        if len(temp_index) != 1:
+            print("Problem with grade for", parsed_name, "found", len(temp_index), "names")
+        df_template.at[temp_index, 'Final Grade'] = getGrade(float(entry["Final Score"]))
+        #df_template.at[temp_index, 'Student ID'] = "%09d"%df_template[temp_index,'Student ID']
+        #print(temp_index)
 
-    #print(output_grades)
-    output_grades.to_excel("221_Data/GradeEntry/full_grades_%d.xlsx"%section_no)
+    #print(df_template)
+    df_template.to_excel("221_Data/GradeEntry/full_grades_%d.xlsx"%section_no)
 
 
