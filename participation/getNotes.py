@@ -44,6 +44,7 @@ with open(fname, newline='') as respfile:
                     print("Found assignment in column", i)
             continue
         if 'Points Possible' in row[0]: continue
+        if row[0] == '': continue
 
         name = row[3]
         score = float(row[col_num])
