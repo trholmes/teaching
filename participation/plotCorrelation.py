@@ -7,10 +7,12 @@ import matplotlib.pyplot as plt
 import csv
 import glob
 
-grade_csv = glob.glob("221_Data/overall/2021*")[0]
-participation_csv = glob.glob("221_Data/overall/Participation Grade*")[0]
+#grade_csv = glob.glob("221_Data/overall/2021*")[0]
+#participation_csv = glob.glob("221_Data/overall/Participation Grade*")[0]
+grade_csv = glob.glob("221_Data/final/2021*")[0]
+participation_csv = glob.glob("221_Data/final/Participation Grade*")[0]
 
-max_week = 6
+max_week = 12
 n_header_cols = 5
 n_participation_types = 5
 
@@ -24,6 +26,7 @@ with open(grade_csv, "r") as f:
     for line in all_grades:
         if line["Student"] == "    Points Possible": continue
         if line["Student"] == "Student, Test": continue
+        if line["Student"] == '': continue
         userid = line['SIS Login ID']
         grades[userid] = line
 
